@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import css from './PhoneBook.module.css';
 class FormHandler extends React.Component {
   state = {
@@ -10,25 +11,29 @@ onChangeHandler = event => {
   const {name, value} = event.currentTarget
   this.setState({[name]: value})
 }
+  
 handlerSumbit = e => {
   e.preventDefault()
-  console.log(this.state)
+  this.props.onSubmit(this.state)
+  
+
+
 }
 
   render() {
     return (
-      <form onChange={this.handlerSumbit} className={css.form}>
+      <form onSubmit={this.handlerSumbit} className={css.form}>
         <ul className={css.list}>
           <li className={css.item}>
             <label>
-              Name
-              <input  onChange={this.onChangeHandler} name='name' type="text"></input>
+              Name:
+              <input value={this.state.name}  onChange={this.onChangeHandler} name='name' type="text"></input>
             </label>
           </li>
           <li className={css.item}> 
             <label>
-              Number
-              <input  name='number' onChange={this.onChangeHandler} type="text"></input>
+              Number:
+              <input value={this.state.number}  name='number' onChange={this.onChangeHandler} type="tel"></input>
             </label>
           </li>
         </ul>
@@ -37,5 +42,9 @@ handlerSumbit = e => {
     );
   }
 }
+
+FormHandler.propTypes = {
+  onSubmit: PropTypes.func.isRequired,
+};
 
 export default FormHandler;

@@ -1,23 +1,27 @@
+import PropTypes from 'prop-types';
 import css from './Contacts.module.css'
-export default function Contacts ({title, contacts}) {
+export default function Contacts ({contacts, deleteContact}) {
     return(
         <>
-        {title && <h2 className={css.title}>{title}</h2>}
-
-         <form className={css.form}>
-            <label className={css.find}>
-                Find by name
-                <input type="text"></input>
-            </label>
-         </form>
 
          <ul className={css.list}>
           {contacts.map(({name, number, id}) => <li key={id} className={css.item}>
             <p>{name}: {number}</p>
-            <button type="button">Delete</button>
+            <button onClick={() => deleteContact(id)} type="button">Delete</button>
           </li>)}
          </ul>
         </>
         
     )
 }
+
+Contacts.propTypes = {
+  contacts: PropTypes.arrayOf(
+    PropTypes.exact({
+      id: PropTypes.string.isRequired,
+      name: PropTypes.string.isRequired,
+      number: PropTypes.string.isRequired,
+    })
+  ),
+  deleteContact: PropTypes.func.isRequired,
+};
