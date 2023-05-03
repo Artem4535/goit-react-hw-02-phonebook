@@ -8,17 +8,20 @@ class FormHandler extends React.Component {
   };
 
 onChangeHandler = event => {
-  const {name, value} = event.currentTarget
+  const { name, value } = event.currentTarget
   this.setState({[name]: value})
 }
   
 handlerSumbit = e => {
   e.preventDefault()
   this.props.onSubmit(this.state)
-  
-
+  this.reset()
 
 }
+  
+  reset = () => {
+    this.setState({ name: '', number: ''})
+  }
 
   render() {
     return (
@@ -33,7 +36,9 @@ handlerSumbit = e => {
           <li className={css.item}> 
             <label>
               Number:
-              <input value={this.state.number}  name='number' onChange={this.onChangeHandler} type="tel"></input>
+              <input value={this.state.number}  name='number' onChange={this.onChangeHandler} type="tel" pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
+  title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
+  required></input>
             </label>
           </li>
         </ul>

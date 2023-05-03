@@ -21,6 +21,12 @@ export class App extends React.Component {
       name,
       number
     }
+    const findUser = this.state.contacts.find(({ name }) => name === contact.name)
+    
+    if (findUser) {
+        alert(`${findUser.name} is already in contacts`);
+      return;
+    }
     
     this.setState(prevState => ({
       contacts: [contact, ...prevState.contacts]
